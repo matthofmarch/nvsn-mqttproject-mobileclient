@@ -9,4 +9,7 @@
 
 <ion-content>
   <p *ngFor="let i of entries">{{i.date}}</p>
+
+  <canvas baseChart [style.width]="400px" [style.height]="400px"
+  [datasets]="lineChartData"></canvas>
 </ion-content>
