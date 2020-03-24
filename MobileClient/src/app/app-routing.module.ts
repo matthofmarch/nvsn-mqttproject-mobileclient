@@ -18,7 +18,11 @@ const routes: Routes = [
     
     .then( m => m.TemperatureChartPageModule)
     .finally(() => console.log("fnjkdn"))
+  },  {
+    path: 'mqtt-inbox',
+    loadChildren: () => import('./pages/mqtt-inbox/mqtt-inbox.module').then( m => m.MqttInboxPageModule)
   }
+
 ];
 
 @NgModule({
