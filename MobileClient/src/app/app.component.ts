@@ -15,39 +15,15 @@ export class AppComponent implements OnInit {
   public appPages = [
     {
       title: 'Temperature',
-      url: '/pages/temperature-chart',
+      url: 'temperature-chart',
       icon: 'thermometer'
     },
     {
-      title: 'Inbox',
-      url: '/folder/Inbox',
-      icon: 'mail'
-    },
-    {
-      title: 'Outbox',
-      url: '/folder/Outbox',
-      icon: 'send'
-    },
-    {
-      title: 'Favorites',
-      url: '/folder/Favorites',
-      icon: 'heart'
-    },
-    {
-      title: 'Archived',
-      url: '/folder/Archived',
-      icon: 'archive'
-    },
-    {
-      title: 'Trash',
-      url: '/folder/Trash',
-      icon: 'trash'
-    },
-    {
-      title: 'Spam',
-      url: '/folder/Spam',
-      icon: 'warning'
+      title: 'mqtt Inbox',
+      url: 'mqtt-inbox',
+      icon: 'thermometer'
     }
+    
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
@@ -72,6 +48,6 @@ export class AppComponent implements OnInit {
     //  this.selectedIndex = this.appPages.findIndex(page => page.url.toLowerCase().endsWith(path.toLowerCase()));
     //}
 
-    this.selectedIndex=0
+    this.selectedIndex=1
   }
 }
