@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   public appPages = [
     {
       title: 'Temperature',
-      url: 'temperature-chart',
+      url: '/pages/temperature-chart',
       icon: 'thermometer'
     },
     {
@@ -67,9 +67,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    const path = window.location.pathname.split('folder/')[1];
-    if (path !== undefined) {
-      this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
-    }
+    //const path = window.location.pathname.split("/").reverse()[0];
+    //if (path !== undefined) {
+    //  this.selectedIndex = this.appPages.findIndex(page => page.url.toLowerCase().endsWith(path.toLowerCase()));
+    //}
+
+    this.selectedIndex=0
   }
 }

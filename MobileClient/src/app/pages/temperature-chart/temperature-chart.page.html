@@ -8,8 +8,12 @@
 </ion-header>
 
 <ion-content>
-  <p *ngFor="let i of entries">{{i.date}}</p>
-
-  <canvas baseChart [style.width]="400px" [style.height]="400px"
-  [datasets]="lineChartData"></canvas>
+  <canvas baseChart 
+    [datasets]="chartData"
+    [labels]="chartLabels"
+    [options]="chartOptions"
+    [plugins]="chartPlugins"
+    [legend]="chartLegend"
+    [chartType]="chartType">
+  </canvas>
 </ion-content>

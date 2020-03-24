@@ -9,11 +9,15 @@ const routes: Routes = [
   },
   {
     path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
+    loadChildren: () => import('./folder/folder.module')
+    .then( m => m.FolderPageModule)
   },
   {
-    path: 'temperature-chart',
-    loadChildren: () => import('./pages/temperature-chart/temperature-chart.module').then( m => m.TemperatureChartPageModule)
+    path: 'pages/temperature-chart',
+    loadChildren: () => import('./pages/temperature-chart/temperature-chart.module')
+    
+    .then( m => m.TemperatureChartPageModule)
+    .finally(() => console.log("fnjkdn"))
   }
 ];
 

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+import { Label } from 'ng2-charts';
 
 
 
@@ -10,27 +12,31 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TemperatureChartPage implements OnInit {
 
-  entries = []
+  chartOptions: ChartOptions = {
+    responsive: true,
+  };
+  chartLabels: Label[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  chartType: ChartType = 'line';
+  chartLegend = true;
+  chartPlugins = [];
+
+  public chartData: ChartDataSets[] = [
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
+  ];
 
   constructor(private activatedRoute:ActivatedRoute) { 
     
   }
 
   ngOnInit() {
-    for (let i = 0; i < 20; i++) {
-      this.entries.push(
-        {
-          date: this.addHours(new Date(), i*24)
-
-        }
-      )
-    }
+    
   }
 
-  addHours(date:Date, hours:number):Date{
+/*   addHours(date:Date, hours:number):Date{
     date.setHours(date.getHours()+hours)
     return date
   }
-  
+   */
 }
 
