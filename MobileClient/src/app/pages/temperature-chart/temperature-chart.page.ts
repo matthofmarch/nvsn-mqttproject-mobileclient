@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 interface ITelemetry{
-  time: Date
+  time: string
   value: number
 }
 
@@ -16,41 +16,55 @@ interface ITelemetry{
   styleUrls: ['./temperature-chart.page.scss'],
 })
 export class TemperatureChartPage{
-  someRequestUrl = "localhost:8020/sensors/office/temperatursensor0815/2/between?startTime=2013-05-18&endTime=2020-12-30"
-
-  sensorTopic="sensors/temperature/1"
+  baseUrl = "http://localhost:8020/sensors/"
+  location = "office"
+  name = "temperatursensor0815"
+  nrOfItems = "15/"
+  endpoint = "between"
+  query = "?startTime=2013-05-18&endTime=2020-12-30"
 
   chartOptions: ChartOptions = {
     responsive: true,
   };
-  chartLabels: Label[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-  chartType: ChartType = 'line';
-  chartLegend = true;
-  chartPlugins = [];
+  chartLabels: Label[] =[]
+  //= ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  chartData:ChartDataSets[] = [{data:[], label: "Telemetry"}]
+  chartType: ChartType= 'line';
+  chartLegend = true
 
-  public chartData: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Messdaten sensor 1' },
-  ];
+    
+    //{ data: [65, 59, 80, 81, 56, 55, 40], label: 'Messdaten sensor 1' },
+
 
 
 
   constructor(private activatedRoute:ActivatedRoute,
-    private httpClient:HttpClient) { 
-    this.httpClient.get<ITelemetry[]>(this.someRequestUrl)
-    .subscribe(x => {
-      this.chartLabels = x.map(x => x.time.toString())
-      this.chartData.push({data: x.map(x=>x.value), label: 'Some telemetry'})
-    })
+    private httpClient:HttpClient) {
+    this.onSensorChange()
+  }
+
+  makeRestURL():string{
+    return this.baseUrl
+      +this.location+"/"
+      +this.name+"/"
+      +this.nrOfItems
+      +this.endpoint
+      +this.query
   }
 
   ngOnInit() {
     
   }
 
-  onChangeSensor(topic: string){
-  
-    this.chartData = []
-    //Change the sensor an the corresponding data
+  onSensorChange(){
+    this.httpClient.get<ITelemetry[]>(this.makeRestURL())
+    .subscribe(telemetry => {
+      this.chartLabels = telemetry.map(x=> new Date(x.time))
+        .map(d => `${d.getDate()}.${d.getMonth()}`)
+        //.map(x => x.toISOString())
+
+      this.chartData[0].data= telemetry.map(x=>x.value)
+    })
   }
 
 }

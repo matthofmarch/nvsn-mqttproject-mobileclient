@@ -7,15 +7,19 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-searchbar value={{sensorTopic}}
-(ionInput)='onChangeSensor($event.detail.value)'></ion-searchbar>
+
 
 <ion-content>
+  <ion-input type="text" color="primary" [(ngModel)]="location">Location: </ion-input>
+  <ion-input type="text" color="primary" [(ngModel)]="name">Sensor Name:</ion-input>
+  <ion-button (click)="onSensorChange()" expand="block" shape="round">
+    Change
+  </ion-button>
+
   <canvas baseChart 
-    [datasets]="chartData"
     [labels]="chartLabels"
+    [datasets]="chartData"
     [options]="chartOptions"
-    [plugins]="chartPlugins"
     [legend]="chartLegend"
     [chartType]="chartType">
   </canvas>

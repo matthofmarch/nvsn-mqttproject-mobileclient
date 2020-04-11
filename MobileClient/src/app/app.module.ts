@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import 'chartjs-plugin-zoom'
 import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt';
 import { HttpClientModule } from '@angular/common/http';
+import { ChartsModule } from 'ng2-charts';
 
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
@@ -30,6 +31,7 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   entryComponents: [],
   imports: [
     BrowserModule,
+    ChartsModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
