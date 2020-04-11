@@ -12,8 +12,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/temperature-chart/temperature-chart.module')
     .then( m => m.TemperatureChartPageModule)
   },
-  
-
 ];
 
 @NgModule({
