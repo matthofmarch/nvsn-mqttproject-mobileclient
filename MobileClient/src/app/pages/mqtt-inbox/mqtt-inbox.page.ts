@@ -1,40 +1,71 @@
-import { Component, OnInit } from '@angular/core';
-import { connect, IClientOptions, MqttClient, IClientSubscribeOptions, ISubscriptionGrant } from "mqtt";
+import { Component } from '@angular/core';
+import { IMqttMessage, MqttModule, IMqttServiceOptions, MqttService } from "ngx-mqtt";
+import { Subscription, Observable } from 'rxjs';
+import { map } from "rxjs/operators";
 
+export interface MqttInboxMessage{
+  topic: string
+  content: ICustomMqttMessage
+}
 
+export interface ICustomMqttMessage{
+  type: string,
+  value: number,
+  unit: string
+}
 
 @Component({
   selector: 'app-mqtt-inbox',
   templateUrl: './mqtt-inbox.page.html',
   styleUrls: ['./mqtt-inbox.page.scss'],
 })
-export class MqttInboxPage implements OnInit {
+export class MqttInboxPage  {
+  topic:string = "#"
+  mqttInboxSubscription$:Subscription
+  inbox = []
 
-  
-  brokerUrl:string
-  client:MqttClient
-  
+  constructor(private _mqttService: MqttService) {
 
-
-  constructor() {
-    this.brokerUrl = '51.136.13.51'
-    this.client = connect(`mqtt://${this.brokerUrl}`)
-
+    this.mqttInboxSubscription$ = this.subscribe()
   }
 
-  ngOnInit() {
-    this.subscribe("#")
+  //Clean up before leaving page
+  public ionViewWillLeave() {
+    this.mqttInboxSubscription$.unsubscribe()
   }
 
-  subscribe(topic:string){
-    this.client.subscribe(topic, (err:Error, granted: ISubscriptionGrant[])=>{
-      if(err)throw err;
-      granted.forEach(grant=>{
-        console.log(grant.topic)
-      })
-    }).on("message", (topic, payload, packet)=>{
-      console.log(`${topic}: ${payload}`)
-    })
+  onTopicChange(){
+    this.unsubscribe()
+    this.inbox = []
+    this.mqttInboxSubscription$ = this.subscribe()
+  }
+
+  subscribe():Subscription
+  {
+    return this._mqttService.observe(this.topic)
+    .pipe(
+      map((m, _) =>  ({
+        topic: m.topic, 
+        content: JSON.parse(new TextDecoder('utf-8').decode(m.payload)) as ICustomMqttMessage
+      }as MqttInboxMessage))
+    ).subscribe(
+      m => this.inbox.splice(0,0,m)
+    )
+  }
+
+  unsubscribe()
+  {
+    this.mqttInboxSubscription$.unsubscribe()
+  }
+
+  public unsafePublish(topic: string, message: string): void {
+    this._mqttService.unsafePublish(topic, message, {qos: 1, retain: true});
+  }
+
+
+  toggleLight(requestState: boolean){
+    this.unsafePublish('device/mohammed/light1', 
+      JSON.stringify({type: 'cmd', value: requestState, unit: 'bool'}))
   }
 
 }

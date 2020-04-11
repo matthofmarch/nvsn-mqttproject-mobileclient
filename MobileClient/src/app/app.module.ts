@@ -10,6 +10,19 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import 'chartjs-plugin-zoom'
+import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt';
+import { HttpClientModule } from '@angular/common/http';
+
+
+export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
+  hostname: '51.136.13.51',
+  port: 8000,
+  protocol: 'ws',
+  //hostname: 'test.mosquitto.org',
+  //hostname: 'localhost',
+  //port: 8080,
+  path: '/mqtt'
+};
 
 
 @NgModule({
@@ -18,7 +31,9 @@ import 'chartjs-plugin-zoom'
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
+    HttpClientModule
   ],
   providers: [
     StatusBar,

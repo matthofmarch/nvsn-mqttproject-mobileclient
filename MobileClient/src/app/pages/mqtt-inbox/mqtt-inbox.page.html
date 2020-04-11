@@ -1,9 +1,36 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>mqtt-inbox</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-Test
+  
+  <ion-item>
+    <ion-label>lightdevice1</ion-label>
+    <ion-toggle [(ngModel)]="lightdevice1"
+    (ionChange)="toggleLight($event.detail.checked)"
+    ></ion-toggle>
+  </ion-item>
+
+  <ion-input type="text" [(ngModel)]="topic"
+  ></ion-input>
+  <button (click)="onTopicChange()">Apply topic change</button>
+  <ion-item-divider>
+    <ion-label>Inbox matching filter</ion-label>
+  </ion-item-divider>
+
+  <div *ngFor="let inboxMessage of inbox;">
+    <h1>{{inboxMessage.topic}}</h1>
+
+    <div >
+      <p style="display: inline-block;">{{inboxMessage.content.type}}</p>
+      <p style="display: inline-block; color: aqua; position: absolute; right: 20px;">
+        {{inboxMessage.content.value}} {{inboxMessage.content.unit}}
+      </p>
+    </div>
+  </div>
 </ion-content>

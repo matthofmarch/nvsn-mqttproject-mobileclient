@@ -1,5 +1,8 @@
 {
   "name": "MobileClient",
-  "integrations": {},
-  "type": "angular"
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "proxy": "http://localhost:8020"
 }

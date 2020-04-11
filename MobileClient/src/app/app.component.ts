@@ -14,15 +14,16 @@ export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = [
     {
+      title: 'mqtt Inbox',
+      url: 'mqtt-inbox',
+      icon: 'thermometer'
+    },
+    {
       title: 'Temperature',
       url: 'temperature-chart',
       icon: 'thermometer'
     },
-    {
-      title: 'mqtt Inbox',
-      url: 'mqtt-inbox',
-      icon: 'thermometer'
-    }
+
     
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
