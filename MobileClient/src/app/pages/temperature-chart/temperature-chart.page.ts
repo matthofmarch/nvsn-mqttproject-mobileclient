@@ -17,8 +17,8 @@ interface ITelemetry{
 })
 export class TemperatureChartPage{
   baseUrl = "http://localhost:8020/sensors/"
-  location = "office"
-  name = "temperatursensor0815"
+  location = "hrazdera"
+  name = "hs1"
   nrOfItems = "15/"
   endpoint = "between"
   query = "?startTime=2013-05-18&endTime=2020-12-30"
@@ -60,7 +60,7 @@ export class TemperatureChartPage{
     this.httpClient.get<ITelemetry[]>(this.makeRestURL())
     .subscribe(telemetry => {
       this.chartLabels = telemetry.map(x=> new Date(x.time))
-        .map(d => `${d.getDate()}.${d.getMonth()}`)
+        .map(d => `${d.getHours()}:${d.getMinutes()}  ${d.getSeconds()}s`)
         //.map(x => x.toISOString())
 
       this.chartData[0].data= telemetry.map(x=>x.value)

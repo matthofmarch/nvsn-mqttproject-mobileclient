@@ -64,8 +64,8 @@ export class MqttInboxPage  {
 
 
   toggleLight(requestState: boolean){
-    this.unsafePublish('device/mohammed/light1', 
-      JSON.stringify({type: 'cmd', value: requestState, unit: 'bool'}))
+    this.unsafePublish('sensors/mohammed/sensor1', 
+      JSON.stringify({type: 'light', value: requestState, unit: 'bool'}))
   }
 
 }
